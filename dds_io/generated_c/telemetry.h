@@ -6,8 +6,8 @@
   Cyclone DDS: V0.11.0
 
 *****************************************************************/
-#ifndef DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_E1B8C931D2D45FEB3D631D432964988B
-#define DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_E1B8C931D2D45FEB3D631D432964988B
+#ifndef DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_8D58EB09136E7EFF0BE6F0D993925038
+#define DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_8D58EB09136E7EFF0BE6F0D993925038
 
 #include "dds/ddsc/dds_public_impl.h"
 
@@ -15,26 +15,26 @@
 extern "C" {
 #endif
 
-#ifndef DDS_SEQUENCE_UINT8_DEFINED
-#define DDS_SEQUENCE_UINT8_DEFINED
-typedef struct dds_sequence_uint8
+#ifndef DDS_SEQUENCE_OCTET_DEFINED
+#define DDS_SEQUENCE_OCTET_DEFINED
+typedef struct dds_sequence_octet
 {
   uint32_t _maximum;
   uint32_t _length;
   uint8_t *_buffer;
   bool _release;
-} dds_sequence_uint8;
+} dds_sequence_octet;
 
-#define dds_sequence_uint8__alloc() \
-((dds_sequence_uint8*) dds_alloc (sizeof (dds_sequence_uint8)));
+#define dds_sequence_octet__alloc() \
+((dds_sequence_octet*) dds_alloc (sizeof (dds_sequence_octet)));
 
-#define dds_sequence_uint8_allocbuf(l) \
+#define dds_sequence_octet_allocbuf(l) \
 ((uint8_t *) dds_alloc ((l) * sizeof (uint8_t)))
-#endif /* DDS_SEQUENCE_UINT8_DEFINED */
+#endif /* DDS_SEQUENCE_OCTET_DEFINED */
 
 typedef struct telemetry_TelemetryPacket
 {
-  dds_sequence_uint8 payload;
+  dds_sequence_octet payload;
 } telemetry_TelemetryPacket;
 
 extern const dds_topic_descriptor_t telemetry_TelemetryPacket_desc;
@@ -49,4 +49,4 @@ dds_sample_free ((d), &telemetry_TelemetryPacket_desc, (o))
 }
 #endif
 
-#endif /* DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_E1B8C931D2D45FEB3D631D432964988B */
+#endif /* DDSC_DDS_IO_GENERATED_C_TELEMETRY_H_8D58EB09136E7EFF0BE6F0D993925038 */

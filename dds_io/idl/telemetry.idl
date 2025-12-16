@@ -1,8 +1,8 @@
 module telemetry
 {
-    struct TelemetryPacket
-    {
-        sequence<uint8> payload;
-    };
+  struct TelemetryPacket
+  {
+    sequence<octet> payload;
+  };
 };
 
