@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(mini_telemetry_dds
     VERSION 0.1.0
     DESCRIPTION "Mini telemetry system over DDS"
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
 enable_testing()
@@ -18,12 +18,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Default build type (for single-config generators like Make)
+# Default build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
-# Export compile commands (useful for VS Code / clang tools)
+# Export compile commands (VS Code / clangd)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ------------------------------------------------------------------------------
