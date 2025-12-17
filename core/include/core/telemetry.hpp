@@ -2,18 +2,18 @@
 
 #include <cstdint>
 #include <string>
-#include <chrono>
+
 
 namespace core
 {
 
-struct Telemetry
+struct TelemetryMessage
 {
-    std::string sensor_id;   // e.g. "temperature"
-    double value;            // sensor reading
-    std::string unit;        // e.g. "C", "bar"
-    std::uint64_t sequence;  // monotonically increasing
-    std::chrono::steady_clock::time_point timestamp;
+    std::uint32_t sensor_id{};
+    double value{};
+    std::string unit;
+    std::uint64_t timestamp_ns{};
+    std::uint64_t sequence{};
 };
 
 } // namespace core

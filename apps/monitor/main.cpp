@@ -4,6 +4,10 @@
 #include <thread>
 #include <vector>
 
+// Core
+#include "core/telemetry.hpp"
+#include "core/telemetry_serializer.hpp"
+
 // DDS
 #include "dds_io/dds_participant.hpp"
 #include "dds_io/dds_subscriber.hpp"
@@ -22,7 +26,6 @@ int main()
 
     std::cout << "[monitor] Starting DDS monitor...\n";
 
-    // DDS setup
     dds_io::DDSParticipant participant;
     dds_io::DDSSubscriber subscriber(participant.participant());
 
@@ -32,12 +35,27 @@ int main()
     {
         if (subscriber.take(payload))
         {
-            std::cout << "[monitor] Received packet ("
-                      << payload.size() << " bytes)\n";
+            try
+            {
+                auto msg = core::TelemetrySerializer::deserialize(payload);
+
+                std::cout << "[monitor] recv: "
+                          << "id=" << msg.sensor_id
+                          << " value=" << msg.value
+                          << " unit=" << msg.unit
+                          << " seq=" << msg.sequence
+                          << "\n";
+            }
+            catch (const std::exception& e)
+            {
+                std::cerr << "[monitor] deserialize error: "
+                          << e.what() << "\n";
+            }
         }
         else
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(50));
         }
     }
 

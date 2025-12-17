@@ -2,6 +2,7 @@
 
 add_library(telemetry_core
     src/logger.cpp
+    src/telemetry_serializer.cpp
 )
 
 target_include_directories(telemetry_core
