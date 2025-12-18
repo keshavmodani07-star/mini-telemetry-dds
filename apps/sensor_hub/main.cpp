@@ -11,7 +11,7 @@
 // Core
 #include "core/telemetry.hpp"
 #include "core/channel.hpp"
-
+#include "core/telemetry_serializer.hpp"
 // DDS
 #include "dds_io/dds_participant.hpp"
 #include "dds_io/dds_publisher.hpp"
@@ -70,9 +70,7 @@ void publisher_thread(
 
     while (channel.pop(msg))
     {
-        std::vector<std::uint8_t> payload(sizeof(msg));
-        std::memcpy(payload.data(), &msg, sizeof(msg));
-
+auto msg = core::TelemetrySerializer::serialize(msg)
         // 🔹 LOG what we publish
         std::cout << "[sensor_hub] publish: "
                   << "id=" << msg.sensor_id
