@@ -7,7 +7,7 @@ namespace dds_io
 
 DDSParticipant::DDSParticipant(std::uint32_t domain_id)
 {
-    participant_ = dds_create_participant(domain_id, nullptr, nullptr);
+    participant_ = dds_create_participant(11, nullptr, nullptr);
     if (participant_ < 0)
     {
         throw std::runtime_error("Failed to create DDS participant");

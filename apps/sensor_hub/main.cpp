@@ -70,8 +70,10 @@ void publisher_thread(
 
     while (channel.pop(msg))
     {
-auto msg = core::TelemetrySerializer::serialize(msg)
-        // 🔹 LOG what we publish
+        // Serialize structured message → raw bytes
+        auto payload = core::TelemetrySerializer::serialize(msg);
+
+        // Log what we publish
         std::cout << "[sensor_hub] publish: "
                   << "id=" << msg.sensor_id
                   << " value=" << msg.value
@@ -85,6 +87,7 @@ auto msg = core::TelemetrySerializer::serialize(msg)
     std::cout << "[publisher] exiting\n";
 }
 
+
 // ---------------- main ----------------
 int main()
 {
@@ -97,7 +100,7 @@ int main()
     TelemetryChannel channel;
 
     // DDS setup
-    dds_io::DDSParticipant participant;
+    dds_io::DDSParticipant participant(11);
     dds_io::DDSPublisher publisher(participant.participant());
 
     // Sensor threads

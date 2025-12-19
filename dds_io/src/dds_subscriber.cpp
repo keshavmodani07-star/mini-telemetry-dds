@@ -3,6 +3,7 @@
 
 #include <dds/dds.h>
 #include <stdexcept>
+#include <cstring>
 
 namespace dds_io
 {
@@ -14,12 +15,19 @@ DDSSubscriber::DDSSubscriber(dds_entity_t participant)
         &telemetry_TelemetryPacket_desc,
         "lab/telemetry",
         nullptr,
-        nullptr);
+        nullptr
+    );
 
     if (topic_ < 0)
         throw std::runtime_error("Failed to create DDS topic");
 
-    reader_ = dds_create_reader(participant, topic_, nullptr, nullptr);
+    reader_ = dds_create_reader(
+        participant,
+        topic_,
+        nullptr,
+        nullptr
+    );
+
     if (reader_ < 0)
         throw std::runtime_error("Failed to create DDS reader");
 }
@@ -37,12 +45,13 @@ bool DDSSubscriber::take(std::vector<std::uint8_t>& out_payload)
     void* samples[1] = { nullptr };
     dds_sample_info_t infos[1];
 
+    // ✅ Correct dds_take usage
     int ret = dds_take(
         reader_,
         samples,
         infos,
-        1,
-        DDS_ANY_STATE
+        1,   // max samples
+        1    // max infos
     );
 
     if (ret <= 0)
@@ -57,9 +66,11 @@ bool DDSSubscriber::take(std::vector<std::uint8_t>& out_payload)
     auto* msg =
         static_cast<telemetry_TelemetryPacket*>(samples[0]);
 
-    out_payload.assign(
+    out_payload.resize(msg->payload._length);
+    std::memcpy(
+        out_payload.data(),
         msg->payload._buffer,
-        msg->payload._buffer + msg->payload._length
+        msg->payload._length
     );
 
     dds_return_loan(reader_, samples, ret);
@@ -67,4 +78,3 @@ bool DDSSubscriber::take(std::vector<std::uint8_t>& out_payload)
 }
 
 } // namespace dds_io
-
