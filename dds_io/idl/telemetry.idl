@@ -1,0 +1,8 @@
+module telemetry
+{
+  struct TelemetryPacket
+  {
+    sequence<octet> payload;
+  };
+};
+
